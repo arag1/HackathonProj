@@ -5,17 +5,22 @@
 
 # MUST RUN http://127.0.0.1:5000/test to retrieve job id for other api endpoints (test2 and test3 to work)
 
-from flask import Flask, render_template, jsonify
+import flask
 import requests
 import json
 
-app = Flask(__name__,template_folder='templates')
+app = flask.Flask(__name__,template_folder='templates')
 
 urls = ["https://iep.utm.edu/wp-content/media/hume-bust.jpg"]
 models = {
 "face": {}
 }
-@app.route("/test")
+@app.route("/")
+def hello_world():
+    # Creating homepage for a test with Hello World using index.html
+
+    return flask.render_template("index.html")
+@app.route("/test1")
 
 def start_job():
     # Must include all headers and body data for url to work
@@ -36,7 +41,7 @@ def start_job():
 
     test = resp.json()
 
-    return jsonify(test=test)
+    return flask.jsonify(test=test)
 
 @app.route("/test2")
 def check_job_status():
@@ -52,7 +57,7 @@ def check_job_status():
 
     test = resp.json()
 
-    return jsonify(test=test)
+    return flask.jsonify(test=test)
 
 @app.route("/test3")
 def predictions():
@@ -66,7 +71,7 @@ def predictions():
 
     test = resp.json()
 
-    return jsonify(test=test)
+    return flask.jsonify(test=test)
 
 
 app.run(debug=True)
